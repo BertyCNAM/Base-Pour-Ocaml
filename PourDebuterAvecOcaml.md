@@ -1,4 +1,4 @@
-# Quelques pistes pour Brunelle 
+# Quelques pistes pour comprendre les bases de Ocaml
 
 ## Bonjour
 Bonjour, je ne sais rien de vous, si ce n'est que nous sommes tous les deux auditeurs en UTC 503.
@@ -37,9 +37,12 @@ let f x = 2*x;;
 print_int(f 3);;
 ```
 
-Je n'y peut rien, c'est comme cela ! 
-La fonction s'appelle f, le paramètre x, et la valeur renvoyée est 2 * x.
-Comme je veux travailler avec des entiers, je mets print_int().
+Je n'y peux rien, c'est comme cela ! 
+La fonction s'appelle `f`, le paramètre `x`, et la valeur renvoyée est `2 * x`.
+
+Et comme c'est toujours mieux d'avoir un retour, j'ai ajouté `print_int(f 3)`.
+- f 3 va retourner 6.
+- print_int() car je sais que le résultat est un  `int`
 
 Original mais pas très compliqué !
 (fig3.png)
@@ -211,11 +214,16 @@ C'est à dire que je peux créer une fonction qui *bloque* un des paramètres! t
 
 Voilà, j'espère que cette petite introduction va t'aider !
 Bien sûr, Ocaml ne s'arrête pas là, mais je crois que pour le UTC503/fonctionnel cela suffit.
+Et pour aller plus loin... 
+- NFP106 au Cnam
+- [Un livre de référence](https://cs3110.github.io/textbook/cover.html)
+
 Bon courage
 Bertrand
 
 bertrand.bouge.auditeur@lecnam.net
-avril 2022
+
+Avril 2022
 
 
 
