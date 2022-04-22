@@ -2,13 +2,13 @@
 
 ## Bonjour
 Bonjour, je ne sais rien de vous, si ce n'est que nous sommes tous les deux auditeurs en UTC 503.
-Je vais donc evoquer quelques points, qui me semblent saillants pour moi pour essayer de vous aider.
+Je vais donc évoquer quelques points, qui me semblent saillants pour moi pour essayer de vous aider.
 Je n'ai pas la prétention de faire un cours. Seulement faire pour moi un exercice de synthèse sur le langage Ocmal
 
 ## Comment faire du Ocaml ?
 ### mon éditeur de texte en ligne que j'aime bien...
 Personnellement, j'aime bien avoir du concret : J'aime bien utiliser [try.ocamlpro.com](http:try.ocamlpro.com)
-C'est un éditeur qui permet de voir ce qu'on fait, et une console qui permet te tester les fonctions.
+C'est un éditeur qui permet de voir ce qu'on fait, et une console qui permet de tester les fonctions.
 (fig1.png)
 
 ### Un premier programme
@@ -26,7 +26,8 @@ On le lance avec le bouton "Evaluer le code" en bas, et on a le résultat de l'e
 ### Quelques règles à partir de cette exemple :
 
 - Toute affectation (variable ou fonction, ce qui est pareil en Ocmal), commence par le clé `let`
-- Pour écrire quelque chose, il faut faire appel à la fonction print_string() ou print_int() selon ce qu'on veut écrire !
+- Toute ligne de code (qui peut tenir sur plusieurs lignes) se terminent par `;;`
+- Pour écrire quelque chose en retour, il faut faire appel à la fonction print_string() ou print_int() selon ce qu'on veut écrire ! Malheureusement, il n'y en a que 4 ( [voir ici](https://cs3110.github.io/textbook/chapters/basics/printing.html) ) print_string(), print_int(), print_float() et print_endline() pour suater une ligne
 - Les variables sont "unmutables", c'est à dire qu'on ne peut pas écrire coucou = coucou + " machin"
 
 ## Ecrire une fonction
@@ -37,7 +38,7 @@ print_int(f 3);;
 ```
 
 Je n'y peut rien, c'est comme cela ! 
-La fonction s'appelle f, le paramètre x, et la valeur renvoyée est 2 * 2.
+La fonction s'appelle f, le paramètre x, et la valeur renvoyée est 2 * x.
 Comme je veux travailler avec des entiers, je mets print_int().
 
 Original mais pas très compliqué !
@@ -54,7 +55,7 @@ Et il me retourne
 - int = 10
 ```
 ### La "Force" de Ocmal (et du paradigme fonctionnel en général)
-Ce qui est très fort, c'est l'appel récursif!
+Ce qui est très fort, en fonctionnel, c'est l'appel récursif!
 Par exemple je veux calculer n!. Appelons `fact n` la fonction qui va le faire
 la méthode est toujours la même:
 1) Quel est le plus petit cas ? ici, on prend n = 1, et 1! = 1, d'où fact 1 doit renvoyer 1.
@@ -78,7 +79,7 @@ let rec fact n = if n = 1 then 1 else n*fact (n-1);;
 print_int(fact 5);;
 ```
 
-Ou si on veut faire joli...
+Ou si on veut faire joli... puisque seul la fin de la commande `;;` compte
 ```Ocaml
 let rec fact n = 
   if n = 1 then 
@@ -91,21 +92,22 @@ print_int(fact 5);;
 ```
 ### Quelques règles
 
-- Ne pas oublier le mot clé `rec` qui marque que la fonction est récursive. Sinon, elle ne peut s'appeler elle-même
-- Il faut impérativement traiter tous les cas ! Sinon le compilateur ava pas être très content...
+- Ne pas oublier le mot clé `rec` qui marque que la fonction est récursive. Sinon, elle ne peut s'appeler elle-même.
+- Il faut impérativement traiter tous les cas ! Sinon le compilateur ne va pas être très content...
 Dans le cas présent, le prof m'a fait remaraquer que pour éviter n = 0 ou n < 0, on peut écrire
 ```Ocaml
 let rec fact n = if n <= 1 then 1 else n*fact (n-1);;
 (* et pour voir le résultat... *)
 print_int(fact 5);;
 ```
-Mais à notre petit niveau, on suppose que l'utilisateur n'écrit pas n'importe quoi ;-) Car le else traite bien tous les cas différents de n = 1. 
+Mais à notre petit niveau, on suppose que l'utilisateur n'écrit pas n'importe quoi ;-) Car pour le compilateur, `else` traite bien tous les cas différents de n = 1, même si cela n'a pas de sens ! 
 
 
 ### Parenthèses, pas parenthèses ?
-Cela peut être déroutant au départ, mais Ocmal n'a pas besoin de parenthèse, tant que cela se lit directement. Ici, seul (n-1) nécessite des parenthèses, car on veut avoir l'image de n - 1 par la fonction fact, et non 1 ôté à l'image de n par fact.
+Cela peut être déroutant au départ, mais Ocmal n'a pas besoin à la base de parenthèses, tant que cela se lit directement. Elles ne sont nécessaires que pour préciser une expression à évaluer en priorité (priorité qui parfois me laisse dubitatif...). 
+Ici, seul (n-1) nécessite des parenthèses, car on veut avoir l'image de n - 1 par la fonction fact, et non 1 ôté à l'image de n par fact.
 Là encore, c'est comme cela. On apprend, et on fait avec.
-Toutefois, si on met des parenthèses partout, Ocaml
+Toutefois, si on met des parenthèses partout, Ocaml gère.
 
 ## Les Listes (Tableaux) en Ocaml
 ### Quelques règles
@@ -142,7 +144,7 @@ NB: `debut` est un `int`, car `tab` est un liste de `int`, alors que `fin` est d
 
 ### Alors comment faire pour manipuler une liste ?
 Regardons sur un exemple simple
-On veut multipler tous les termes d'un tabelau par 2. 
+On veut multipler tous les termes d'un tableau par 2. 
 
 Avec courage, on applique la méthode !
 Soit `double` cette fonction, qui admet une liste comme paramètre, et qui renvoie une liste.
@@ -170,6 +172,7 @@ let result = double t;;
 Simple, non ?
 
 ## Encore plus fort !
+### Déja pas mal
 Je peux décider que 2 soit un paramètre...
 Je peux donc écrire 
 ```Ocaml
@@ -183,7 +186,7 @@ let rec fois n tab =
     
 let result = fois 2 t;;
 ``` 
-
+### Encore plus plus fort !
 Mais cela n'est pas le plus fort... C'est maintenant.
 Pour Ocmal, une fonction est une variable comme les autres. En fait, non, une variable est une fonction comme les autres.
 Et donc, je peux légitiment écrire :
@@ -202,13 +205,17 @@ let double = fois 2;;
 let result = double t;;
 ``` 
 
-C'est à dire que je peux créer une fonction qui bloque un des paramètres! trop cool.
+C'est à dire que je peux créer une fonction qui *bloque* un des paramètres! trop cool.
 
 ## Conclusion
 
 Voilà, j'espère que cette petite introduction va t'aider !
+Bien sûr, Ocaml ne s'arrête pas là, mais je crois que pour le UTC503/fonctionnel cela suffit.
 Bon courage
 Bertrand
+
+bertrand.bouge.auditeur@lecnam.net
+avril 2022
 
 
 
