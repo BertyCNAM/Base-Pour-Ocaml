@@ -170,9 +170,11 @@ Soit `double` cette fonction, qui admet une liste comme paramètre, et qui renvo
 2. le cas général : Soit `[xn-1 ; xn-2; ;... ;x0]` cette liste de n éléments.
    - On suppose que cela marche avec une liste de taille n-1, et que donc `double [xn-2;   ;x0]` a du sens. 
    - Que se passe-t-il pour une liste de taille n ?
-   Et bien, je dis que le résultat c'est une premiere liste de 1 élément, le premier qui va être multiplié par 2, concaténée à la liste renvoyée par `double [xn-2;   ;x0]`.
+   Et bien, je dis que le résultat c'est une premiere liste d'un seul élément, le premier qui va être multiplié par 2, concaténée à la liste renvoyée par `double [xn-2;   ;x0]`.
    
-*pour info la concaténation se note "@" pour les `list` et ^ pour `string`*
+*Attention*
+- *ne pas oublier les `[ (*image du premier élément*) ]` pour avoir une liste avec l'image du premier élément.*
+- *Pour info la concaténation se note "@" pour les `list` et ^ pour `string`.*
 
 On a donc cela 
 
@@ -183,7 +185,7 @@ let rec double tab =
   if tab = [] then
     []
   else 
-    [List.hd(tab) * 2] @ (double (List.tl(tab)));;
+    [2 * List.hd(tab)] @ (double (List.tl(tab)));;
 (* Attention, là, il y a besoins de toutes les parenthèses... *)    
 
 (* et, ne pouvant imprimer un tableau, je le mets dans une variable pour le voir à la compilation *)
@@ -203,7 +205,7 @@ let rec fois n tab =
   if tab = [] then
     []
   else 
-    [List.hd(tab) * 2] @ (fois n (List.tl(tab)));;
+    [n * List.hd(tab)] @ (fois n (List.tl(tab)));;
     
 let result = fois 2 t;;
 ``` 
@@ -219,7 +221,7 @@ let rec fois n tab =
   if tab = [] then
     []
   else 
-    [List.hd(tab) * 2] @ (fois n (List.tl(tab)));;
+    [n * List.hd(tab)] @ (fois n (List.tl(tab)));;
 
 (* Je définie une nouvelle fonction *)
 let double = fois 2;;
