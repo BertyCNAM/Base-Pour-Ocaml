@@ -6,17 +6,18 @@ Je vais donc évoquer quelques points, qui me semblent saillants pour moi pour e
 Je n'ai pas la prétention de faire un cours. Seulement faire pour moi un exercice de synthèse sur le langage Ocmal
 
 ## Comment faire du Ocaml ?
-### mon éditeur de texte en ligne que j'aime bien...
+### Mon éditeur de texte en ligne que j'aime bien...
 Personnellement, j'aime bien avoir du concret : J'aime bien utiliser [try.ocamlpro.com](http:try.ocamlpro.com)
 C'est un éditeur qui permet de voir ce qu'on fait, et une console qui permet de tester les fonctions.
 (fig1.png)
 
-### Un premier programme
+### Mon premier programme
 on écrit un programme
 ```Ocaml
 (* Mon premier commentaire, 
    au début de mon premier programme en Ocaml...*)
 let coucou = "Coucou";;
+
 (* Et histoire de voir qu'il se passe quelque chose...*)
 print_string(coucou);;
 ```
@@ -27,21 +28,22 @@ On le lance avec le bouton "Evaluer le code" en bas, et on a le résultat de l'e
 
 - Toute affectation (variable ou fonction, ce qui est pareil en Ocmal), commence par le clé `let`
 - Toute ligne de code (qui peut tenir sur plusieurs lignes) se terminent par `;;`
-- Pour écrire quelque chose en retour, il faut faire appel à la fonction print_string() ou print_int() selon ce qu'on veut écrire ! Malheureusement, il n'y en a que 4 ( [voir ici](https://cs3110.github.io/textbook/chapters/basics/printing.html) ) print_string(), print_int(), print_float() et print_endline() pour suater une ligne
 - Les variables sont "unmutables", c'est à dire qu'on ne peut pas écrire coucou = coucou + " machin"
+- Pour écrire quelque chose en retour, il faut faire appel à la fonction print_string() ou print_int() selon ce qu'on veut écrire ! Malheureusement, il n'y en a que 4 ( [voir ici](https://cs3110.github.io/textbook/chapters/basics/printing.html) ) print_string(), print_int(), print_float() et print_endline() pour sauter une ligne
 
 ## Ecrire une fonction
 ### la base
 ```Ocaml
-let f x = 2*x;;
+let f x = 2 * x;;
 print_int(f 3);;
 ```
 
-Je n'y peux rien, c'est comme cela ! 
-La fonction s'appelle `f`, le paramètre `x`, et la valeur renvoyée est `2 * x`.
+Je n'y peux rien, la syntaxe est ainsi !
+
+La fonction s'appelle `f`, le paramètre `x`, et la valeur retournée est `2 * x`.
 
 Et comme c'est toujours mieux d'avoir un retour, j'ai ajouté `print_int(f 3)`.
-- f 3 va retourner 6.
+- `f 3` va retourner `2 * 3` c 'est à dire `6`.
 - print_int() car je sais que le résultat est un  `int`
 
 Original mais pas très compliqué !
@@ -57,15 +59,20 @@ Et il me retourne
 ```Ocaml
 - int = 10
 ```
+Trop fort !
+
 ### La "Force" de Ocmal (et du paradigme fonctionnel en général)
 Ce qui est très fort, en fonctionnel, c'est l'appel récursif!
-Par exemple je veux calculer n!. Appelons `fact n` la fonction qui va le faire
-la méthode est toujours la même:
+
+Par exemple je veux calculer n!. Appelons `fact n` la fonction qui va le faire.
+
+La méthode de méodélisation est toujours la même:
 1) Quel est le plus petit cas ? ici, on prend n = 1, et 1! = 1, d'où fact 1 doit renvoyer 1.
 2) On suppose que le programme tourne jusqu'à n-1... c'est à dire de fact (n-1) a du sens. Comment vais-je calculer fact n ? 
 Assez clairement, pour moi, fact n = n * fact (n-1).
 
-En python cela donerait cela 
+En python cela donerait cela
+
 ```python
 def fact(n:int)->int:
   if n == 1:
@@ -76,13 +83,16 @@ print(fact(5))
 ```
 
 Et bien en Ocmal, cela s'écrit
+
 ```Ocaml
 let rec fact n = if n = 1 then 1 else n*fact (n-1);;
+
 (* et pour voir le résultat... *)
 print_int(fact 5);;
 ```
 
-Ou si on veut faire joli... puisque seul la fin de la commande `;;` compte
+Ou si on veut faire joli... puisque seule la fin de la commande `;;` compte
+
 ```Ocaml
 let rec fact n = 
   if n = 1 then 
@@ -93,18 +103,20 @@ let rec fact n =
 (* et pour voir le résultat... *)
 print_int(fact 5);;
 ```
+
 ### Quelques règles
 
 - Ne pas oublier le mot clé `rec` qui marque que la fonction est récursive. Sinon, elle ne peut s'appeler elle-même.
 - Il faut impérativement traiter tous les cas ! Sinon le compilateur ne va pas être très content...
 Dans le cas présent, le prof m'a fait remaraquer que pour éviter n = 0 ou n < 0, on peut écrire
+
 ```Ocaml
 let rec fact n = if n <= 1 then 1 else n*fact (n-1);;
 (* et pour voir le résultat... *)
 print_int(fact 5);;
 ```
-Mais à notre petit niveau, on suppose que l'utilisateur n'écrit pas n'importe quoi ;-) Car pour le compilateur, `else` traite bien tous les cas différents de n = 1, même si cela n'a pas de sens ! 
 
+Mais à notre petit niveau, on suppose que l'utilisateur n'écrit pas n'importe quoi ;-) Car pour le compilateur, `else` traite bien tous les cas différents de n = 1, même si pour `n <= 0`, cela n'a pas de sens mathématique ! 
 
 ### Parenthèses, pas parenthèses ?
 Cela peut être déroutant au départ, mais Ocmal n'a pas besoin à la base de parenthèses, tant que cela se lit directement. Elles ne sont nécessaires que pour préciser une expression à évaluer en priorité (priorité qui parfois me laisse dubitatif...). 
@@ -129,7 +141,7 @@ Rappel : tous les éléments doit avoir le même type.
 ## La manipulation des Listes 
 ### hum... Ocaml pas gentil...
 
-Pour cela il y a deux fonctions dans le module `List`, qui gère les listes :
+Pour manipuler une liste, il n'y a donc que deux méthodes dans le module `List`, qui, comme le nom l'indique, gère les listes :
 
 - `List.hd(tab)`, qui renvoie le premier terme
 - `Liste.tl(tab)`, qui renvoie toute la liste, sauf le premier élément. (attention, si tab = [], cela plante !)
@@ -143,7 +155,9 @@ let fin = List.tl(tab);;
 
 on a `debut = 1` et `fin = [2; 3]`.
 
-NB: `debut` est un `int`, car `tab` est un liste de `int`, alors que `fin` est de type `list`, éventuellement vide.
+NB: 
+- `debut` est un `int` (dans le cas présent, car `tab` est un liste de `int`) 
+- `fin` est de type `list`, éventuellement vide.
 
 ### Alors comment faire pour manipuler une liste ?
 Regardons sur un exemple simple
@@ -153,9 +167,12 @@ Avec courage, on applique la méthode !
 Soit `double` cette fonction, qui admet une liste comme paramètre, et qui renvoie une liste.
 
 1. Le plus petit cas... le tableau vide [], et donc `double []` renvoie `[]`
-2. On suppose que cela marche avec une liste de taille n-1, et que donc `double [xn-2;   ;x0]` a du sens. Que se passe-t-il pour une liste de taille n ? soit `[xn-1 ; xn-2; ;... ;x0]` 
-Et bien, je dis que le résultat c'est une premiere liste de 1 élément, le premier qui va être multiplié par 2, concaténée à la liste renvoyée par `double [xn-2;   ;x0]`.
-*pour info la concaténation se note "@" pour les listes et ^ pour string*
+2. le cas général : Soit `[xn-1 ; xn-2; ;... ;x0]` cette liste de n éléments.
+   - On suppose que cela marche avec une liste de taille n-1, et que donc `double [xn-2;   ;x0]` a du sens. 
+   - Que se passe-t-il pour une liste de taille n ?
+   Et bien, je dis que le résultat c'est une premiere liste de 1 élément, le premier qui va être multiplié par 2, concaténée à la liste renvoyée par `double [xn-2;   ;x0]`.
+   
+*pour info la concaténation se note "@" pour les `list` et ^ pour `string`*
 
 On a donc cela 
 
@@ -168,15 +185,16 @@ let rec double tab =
   else 
     [List.hd(tab) * 2] @ (double (List.tl(tab)));;
 (* Attention, là, il y a besoins de toutes les parenthèses... *)    
+
+(* et, ne pouvant imprimer un tableau, je le mets dans une variable pour le voir à la compilation *)
 let result = double t;;
 ``` 
-
 
 Simple, non ?
 
 ## Encore plus fort !
-### Déja pas mal
-Je peux décider que 2 soit un paramètre...
+### Déja pas mal...
+Je peux décider que `2` soit un paramètre...
 Je peux donc écrire 
 ```Ocaml
 let t = [1; 2; 3];;
@@ -189,7 +207,7 @@ let rec fois n tab =
     
 let result = fois 2 t;;
 ``` 
-### Encore plus plus fort !
+### ... mais encore plus plus fort !
 Mais cela n'est pas le plus fort... C'est maintenant.
 Pour Ocmal, une fonction est une variable comme les autres. En fait, non, une variable est une fonction comme les autres.
 Et donc, je peux légitiment écrire :
@@ -203,8 +221,10 @@ let rec fois n tab =
   else 
     [List.hd(tab) * 2] @ (fois n (List.tl(tab)));;
 
+(* Je définie une nouvelle fonction *)
 let double = fois 2;;
 
+(* Et je l'applique à t *)
 let result = double t;;
 ``` 
 
@@ -212,13 +232,14 @@ C'est à dire que je peux créer une fonction qui *bloque* un des paramètres! t
 
 ## Conclusion
 
-Voilà, j'espère que cette petite introduction va t'aider !
+Voilà, j'espère que cette petite introduction pourra t'aider !
 Bien sûr, Ocaml ne s'arrête pas là, mais je crois que pour le UTC503/fonctionnel cela suffit.
 Et pour aller plus loin... 
 - NFP106 au Cnam
 - [Un livre de référence](https://cs3110.github.io/textbook/cover.html)
 
 Bon courage
+
 Bertrand
 
 bertrand.bouge.auditeur@lecnam.net
